@@ -1,54 +1,59 @@
 class Solution {
 
-    class DSU {
+    class Dsu{
         int[] parent;
 
-        DSU(int n) {
-            parent = new int[n];
+        Dsu(int n){
+            parent= new int[n];
 
-            for (int i = 0; i < n; i++) {
-                parent[i] = i;
+            for(int i=0;i<n;i++){
+                parent[i]=i;
             }
         }
 
-        int find(int x) {
-            if (parent[x] == x)
-                return x;
 
-            return parent[x] = find(parent[x]);
-        }
+            int find(int x){
+                if(parent[x]==x){
+                    return x;
+                }
 
-        void union(int x, int y) {
-            int px = find(x);
-            int py = find(y);
-
-            if (px != py) {
-                parent[py] = px;
+                return parent[x]=find(parent[x]);
             }
-        }
+
+            void union(int x, int y){
+                int px=find(x);
+                int py= find(y);
+
+                if(px != py){
+                    parent[py]=px;
+                }
+
+            }
+
     }
-
     public boolean[] pathExistenceQueries(int n, int[] nums, int maxDiff, int[][] queries) {
 
-        DSU dsu = new DSU(n);
+        Dsu dsu= new Dsu(n);
 
-        // Connect adjacent nodes only
-        for (int i = 0; i < n - 1; i++) {
-            if (nums[i + 1] - nums[i] <= maxDiff) {
-                dsu.union(i, i + 1);
+
+        for(int i=0;i<n-1;i++){
+            if(nums[i+1]-nums[i]<=maxDiff){
+                dsu.union(i,i+1);
             }
         }
 
-        boolean[] ans = new boolean[queries.length];
+boolean[] ans = new boolean[queries.length];
 
-        for (int i = 0; i < queries.length; i++) {
+        for(int i=0;i<queries.length;i++){
+            int u=queries[i][0];
+            int v=queries[i][1];
 
-            int u = queries[i][0];
-            int v = queries[i][1];
 
-            ans[i] = dsu.find(u) == dsu.find(v);
+              ans[i]=dsu.find(u)== dsu.find(v);
+            
+
         }
-
         return ans;
+        
     }
 }
