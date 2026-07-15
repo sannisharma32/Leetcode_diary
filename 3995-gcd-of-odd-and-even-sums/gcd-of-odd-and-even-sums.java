@@ -1,0 +1,26 @@
+class Solution {
+
+    int gcd(int a, int b){
+        
+        while(b!=0){
+            int temp=b;
+            b=a%b;
+            a=temp;
+        }
+        return a;
+
+    }
+    public int gcdOfOddEvenSums(int n) {
+
+        
+        int even=n*n;
+        int  odd=n*(n+1);
+
+        return   gcd(even , odd);
+
+
+        
+
+        
+    }
+}
